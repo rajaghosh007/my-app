@@ -24,11 +24,13 @@ Thanks
 Raja G''', cc: '', from: '', replyTo: '', subject: 'Build Triggered ', to: 'raja.ghosh123@gmail.com'
   }
   
-  sshagent(['tomcatDev']) {
-      sh "ssh ${tomcatUser}@${tomcatIp} /opt/apache-tomcat-9.0.10/bin/shutdown.sh"
-      sh 'scp -o StrictHostKeyChecking=no target/*.war ${tomcatUser}@${tomcatIp}:/opt/apache-tomcat-9.0.10/webapps'
-      sh "ssh ${tomcatUser}@${tomcatIp} /opt/apache-tomcat-9.0.10/bin/shutdown.sh"
-  }
+   stage('Deploy-to-tomcat'){
+     sshagent(['tomcatDev']) {
+         sh "ssh ${tomcatUser}@${tomcatIp} /opt/apache-tomcat-9.0.10/bin/shutdown.sh"
+         sh 'scp -o StrictHostKeyChecking=no target/*.war ${tomcatUser}@${tomcatIp}:/opt/apache-tomcat-9.0.10/webapps'
+         sh "ssh ${tomcatUser}@${tomcatIp} /opt/apache-tomcat-9.0.10/bin/shutdown.sh"
+     }
+   }
    
 }
 
