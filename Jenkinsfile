@@ -1,6 +1,7 @@
 
 node {
-  
+   def tomcatIp = '172.31.33.67'
+   def tomcatUser = 'ec2-user'
    stage('Checkout') {
            
                 checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/rajaghosh007/my-app']]])
@@ -21,6 +22,12 @@ sh "${mvnHome} package"
 Jenkins build trigger
 Thanks
 Raja G''', cc: '', from: '', replyTo: '', subject: 'Build Triggered ', to: 'raja.ghosh123@gmail.com'
+  }
+  
+  sshagent(['67564cf3-b7fa-43b9-943b-05ebf84d2e68']) {
+      sh "ssh ${tomcatUser}@${tomcatIp} /opt/apache-tomcat-9.0.10/bin/shutdown.sh"
+      sh 'scp -o StrictHostKeyChecking=no target/*.war ${tomcatUser}@${tomcatIp}:/opt/apache-tomcat-9.0.10/webapps'
+      sh "ssh ${tomcatUser}@${tomcatIp} /opt/apache-tomcat-9.0.10/bin/shutdown.sh"
   }
    
 }
