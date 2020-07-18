@@ -25,7 +25,7 @@ Raja G''', cc: '', from: '', replyTo: '', subject: 'Build Triggered ', to: 'raja
   }
   
    stage('Deploy-to-tomcat'){
-     sshagent(['tomcatDeploment1']) {
+     sshagent(['tomcatDeploment2']) {
                sh 'scp -o StrictHostKeyChecking=no target/*.war ec2-user@172.31.33.67:/opt/apache-tomcat-9.0.10/webapps' 
      }
    }
