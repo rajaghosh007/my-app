@@ -1,6 +1,6 @@
 
 node {
-   def tomcatIp = '172.31.33.67'
+   def tomcatIp = '18.217.202.152'
    def tomcatUser = 'ec2-user'
    stage('Checkout') {
            
